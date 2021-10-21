@@ -1,5 +1,6 @@
 package de.xab.ping.connector;
 
+import com.google.common.base.Throwables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,7 @@ public class JDBCConnector extends AbstractDBConnector {
              ResultSet resultSet = statement.executeQuery(sql)) {
             return printResultSet(resultSet);
         } catch (SQLException e) {
+            logger.error(Throwables.getStackTraceAsString(e));
             return false;
         }
     }
@@ -34,8 +36,8 @@ public class JDBCConnector extends AbstractDBConnector {
 
         logger.info(column.toString());
         logger.info("---");
-        StringBuilder row = new StringBuilder();
         while (resultSet.next()) {
+            StringBuilder row = new StringBuilder();
             for (int i = 0; i < columnCount; i++) {
                 row.append(" ").append(resultSet.getString(i + 1));
             }
