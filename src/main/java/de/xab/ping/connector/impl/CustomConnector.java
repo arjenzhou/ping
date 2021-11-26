@@ -35,6 +35,12 @@ public class CustomConnector extends JDBCConnector {
 
     @Override
     protected Connection getConnection(String url, String username, String password, Properties properties) throws SQLException {
+        if (username != null) {
+            properties.put("user", username);
+        }
+        if (password != null) {
+            properties.put("password", password);
+        }
         String driverClass = getDriverClass(properties);
         String driverFolder = (String) properties.get(DRIVER_FOLDER);
         Driver driver = loadDriver(url, driverFolder, driverClass);

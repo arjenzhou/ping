@@ -17,7 +17,7 @@ import java.util.function.Function;
 
 import static de.xab.ping.common.Constants.*;
 
-public class HiveConnector extends CustomConnector {
+public class HiveConnector extends BuiltinConnector {
     Logger logger = LoggerFactory.getLogger("PING");
 
     @Override
@@ -25,18 +25,12 @@ public class HiveConnector extends CustomConnector {
         try {
             Context context = new Context(url, username, password, sql, properties);
             return exec(context, (funcContext -> {
-                if (username != null) {
-                    properties.put("user", username);
-                }
-                if (password != null) {
-                    properties.put("password", password);
-                }
                 try (Connection connection = getConnection(url, null, null, properties);
                      Statement statement = connection.createStatement();
                      ResultSet resultSet = statement.executeQuery(sql)) {
                     return printResultSet(resultSet);
                 } catch (SQLException e) {
-                   logger.error(Throwables.getStackTraceAsString(e));
+                    logger.error(Throwables.getStackTraceAsString(e));
                     return false;
                 }
             }));
@@ -63,10 +57,5 @@ public class HiveConnector extends CustomConnector {
             ugi.doAs((PrivilegedAction<?>) () -> function.apply(context));
         }
         return false;
-    }
-
-    @Override
-    protected String parseDriver(String url, String driverFolder) {
-        return "drivers/" + url.split(":")[1] + "/";
     }
 }

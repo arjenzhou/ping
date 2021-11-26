@@ -1,5 +1,7 @@
+external=de.xab.ping.connector.impl.ExternalConnector
 h2=de.xab.ping.connector.impl.H2Connector
 postgresql=de.xab.ping.connector.impl.PostgreSQLConnector
 hive=de.xab.ping.connector.impl.HiveConnector
 impala=de.xab.ping.connector.impl.ImpalaConnector
 prestodb=de.xab.ping.connector.impl.PrestoDBConnector
+mysql=de.xab.ping.connector.impl.MySQLConnector
