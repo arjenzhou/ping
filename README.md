@@ -26,13 +26,18 @@ ping is a universal data source connection test project.
 
 ## Common Driver
 
-ping have some builtin drivers
-
 ### PostgreSQL
 
 required parameters: type, url, sql, username, password
 ```
 java -jar ping.jar --type postgresql --url "jdbc:postgresql://127.0.0.1:5432/postgres" --username postgres --password password --sql "SELECT 1"
+```
+
+### Redshift
+
+required parameters: type, url, sql, username, password
+```
+java -jar ping.jar --type redshift --url "jdbc:redshift://127.0.0.1:5432/abc" --username foo --password bar --sql "SELECT 1"
 ```
 ### PrestoDB
 
@@ -44,6 +49,18 @@ java -jar ping.jar --type prestodb --url "jdbc:presto://127.0.0.1:8081/hive/bi" 
 
 ```
 java -jar ping.jar --type prestodb --username hive --url "jdbc:presto://127.0.0.1:7778?SSL=true&KerberosKeytabPath=./impala.keytab&KerberosPrincipal=impala/foo.org@BAR.COM&SSLTrustStorePath=./keystore.jks&SSLTrustStorePassword=password&KerberosRemoteServiceName=impala&KerberosConfigPath=./krb5.conf" --sql "SELECT 1"
+```
+
+### Trino
+
+required addon parameters which used to auth with Kerberos or LDAP
+
+```
+java -jar ping.jar --type trino --url "jdbc:trino://127.0.0.1:8081/hive/bi" --sql "SELECT 1"
+```
+
+```
+java -jar ping.jar --type trino --username hive --url "jdbc:trino://127.0.0.1:7778?SSL=true&KerberosKeytabPath=./impala.keytab&KerberosPrincipal=impala/foo.org@BAR.COM&SSLTrustStorePath=./keystore.jks&SSLTrustStorePassword=password&KerberosRemoteServiceName=impala&KerberosConfigPath=./krb5.conf" --sql "SELECT 1"
 ```
 
 ## Builtin Driver
@@ -85,7 +102,7 @@ Using custom driver, `--driverFolder` and `--driverClass` is required to specify
 
 For example:
 ```
-java -jar ping.ar --type external --username dbadmin --password dbadmin --url "jdbc:vertica://127.0.0.1:5433/vmart" --sql "SELECT * FROM "online_sales"."call_center_dimension" LIMIT 3" --driverFolder "path_to_folder" --driverClass "com.vertica.jdbc.Driver"
+java -jar ping.jar --type external --username dbadmin --password dbadmin --url "jdbc:vertica://127.0.0.1:5433/vmart" --sql "SELECT * FROM "online_sales"."call_center_dimension" LIMIT 3" --driverFolder "path_to_folder" --driverClass "com.vertica.jdbc.Driver"
 ```
 ## How to add Connector
 

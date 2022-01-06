@@ -76,8 +76,7 @@ public class CustomConnector extends JDBCConnector {
             FileSystems.newFileSystem(uri, env);
             Path dirPath = Paths.get(uri);
             list = Files.list(dirPath).map(path -> {
-                try {
-                    InputStream in = Files.newInputStream(path);
+                try (InputStream in = Files.newInputStream(path)){
                     final File tempFile = File.createTempFile("PREFIX", "SUFFIX");
                     tempFile.deleteOnExit();
                     try (FileOutputStream out = new FileOutputStream(tempFile)) {

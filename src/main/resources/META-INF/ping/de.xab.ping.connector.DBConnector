@@ -5,3 +5,5 @@ hive=de.xab.ping.connector.impl.HiveConnector
 impala=de.xab.ping.connector.impl.ImpalaConnector
 prestodb=de.xab.ping.connector.impl.PrestoDBConnector
 mysql=de.xab.ping.connector.impl.MySQLConnector
+trino=de.xab.ping.connector.impl.TrinoConnector
+redshift=de.xab.ping.connector.impl.RedshiftConnector
